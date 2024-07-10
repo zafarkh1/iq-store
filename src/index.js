@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+import '@iqueue/ui-kit/lib/ui-kit.css'
+import '@iqueue/ui-kit/lib/icons.css'
+import '@iqueue/ui-kit/lib/roboto.css'
+
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {DataProvider} from "./provider/dataProvider";
+import {TokenContext} from "./provider/tokenProvider";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <TokenContext>
+    <DataProvider>
+      <App/>
+    </DataProvider>
+  </TokenContext>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
