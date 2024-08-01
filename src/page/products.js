@@ -9,7 +9,6 @@ import {indexBy, map, prop} from "ramda";
 import QRCode from 'qrcode.react';
 import ProductQRCode from "../modal/productQRCode";
 
-
 function Products() {
   const {
     products,
@@ -75,51 +74,6 @@ function Products() {
     });
   }, [currentUser, saveChangeHistory, setProducts, models]);
 
-  // const handlePrintQRCode = async (product) => {
-  //   try {
-  //     const device = await navigator.usb.requestDevice({ filters: [{ vendorId: 0x1fc9 }] });
-  //     await device.open();
-  //     await device.selectConfiguration(1);
-  //     await device.claimInterface(0);
-  //
-  //     const productData = JSON.stringify(product);
-  //
-  //     // ESC/POS commands for printing QR code
-  //     const encoder = new TextEncoder();
-  //     const escPosCommands = [
-  //       0x1B, 0x40, // Initialize printer
-  //       0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, 0x08, // QR code model
-  //       0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x45, 0x30, // QR code error correction
-  //       0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x41, 0x02, // QR code size
-  //       0x1D, 0x28, 0x6B, (productData.length + 3) & 0xFF, ((productData.length + 3) >> 8) & 0xFF, 0x31, 0x50, 0x30, // Store QR code data
-  //       ...encoder.encode(productData),
-  //       0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30, // Print QR code
-  //     ];
-  //
-  //     const data = new Uint8Array(escPosCommands);
-  //     await device.transferOut(1, data);
-  //
-  //     await device.close();
-  //
-  //     Message({
-  //       type: 'success',
-  //       title: 'QR Code Printed',
-  //       timeout: 2000,
-  //     });
-  //   } catch (error) {
-  //     console.error('Error printing QR code:', error);
-  //
-  //     Message({
-  //       type: 'error',
-  //       title: 'Printing Error',
-  //       message: error.message,
-  //       timeout: 3000,
-  //     });
-  //   }
-  // };
-
-
-
   const generateQRCodeValue = (product, models, manufacturers, suppliers, categories) => {
     return JSON.stringify({
       id: product.id,
@@ -131,23 +85,7 @@ function Products() {
     });
   };
 
-  const handlePrintQRCode = useCallback((product) => {
-    // Example ESC/POS command to print QR code
-    const qrCodeValue = generateQRCodeValue(product, models, manufacturers, suppliers, categories);
-    const qrCodeData = qrCodeValue;
-    const printerCommand = `ESC/P ASCII: "${qrCodeData}"\n`;
-
-    // Replace with actual code to send command to printer
-    console.log('Printing QR code:', printerCommand);
-    // Example: Use a library like 'node-escpos' or similar to send commands to the printer
-
-    Message({
-      type: 'success',
-      title: 'QR Code printed successfully',
-      timeout: 2000
-    });
-  }, [generateQRCodeValue, models, manufacturers, suppliers, categories]);
-
+  const handlePrintQRCode = () => {}
 
   const schema = useMemo(() => [
     {
